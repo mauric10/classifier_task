@@ -20,42 +20,42 @@ from albclf.utils import trainClassifier, loadClassifier, predict
 def main():
     try:
         message = sys.argv[1]
-    
+
     except IndexError:
         print("Message for classification task not passed.")
         return
-    
+
     if len(sys.argv) > 2:
         print("Too many msgs passed.")
         return
-    
+
     else:
         try:
             # try to load saved classifier
             classifier = loadClassifier('classifier.pkl')
-            
+
         except PickleError:
             # if no saved classifier found, train a new one with data provided.
             try:
                 data = pd.read_csv('data/ProjectTrainingData.csv')
                 if "Message" and "Category" not in data.keys():
                     raise DataError
-                    
+
             except IOError:
                 print('Training data not found. Stopping program.')
                 return
-                
+
             except DataError:
                 print('Incorrectly formatted data. Stopping program.')
                 return
-        
-            # finally train (& save) classifier if not loaded above and data is OK        
-            classifier = trainClassifier(data, 'classifier.pkl')  
-        
-        if isinstance(classifier, BaseEstimator):            
+
+            # finally train (& save) classifier if not loaded above and data is OK
+            classifier = trainClassifier(data, 'classifier.pkl')
+
+        if isinstance(classifier, BaseEstimator):
             category = predict(classifier, message)
             print("Returned category: %s" % category)
-        
+
         else:
             print("Non-classifier returned. Stopping program.")
 

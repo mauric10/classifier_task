@@ -32,3 +32,9 @@ From inside the virtual environment and inside the classifier_task directory, ru
 `py.test`
 
 If all else fails, a docker container is inlcuded with known working code for python 2.7.13.
+
+`docker-compose up`
+
+When it finished  building and the container is running:
+
+`docker exec $(docker ps -qf name='classifier') python classifier.py "i need to pay my bills!"`
